@@ -202,7 +202,7 @@ void handleLine(char* s) {
     case 'o':
       if (sscanf(s + 1, "%f", &a) == 1) {
         if (j.enabled || j.homing) { Serial.println("Deshabilita primero (e 0) y espera a que termine el homing."); return; }
-        a = constrain(a, -0.3f, 0.3f);
+        a = constrain(a, -0.6f, 0.6f);
         float p0 = jointPosDeg(j);
         j.openDuty = a; j.openUntil = millis() + 300;
         delay(450);
