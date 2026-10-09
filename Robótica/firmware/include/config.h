@@ -10,11 +10,25 @@ constexpr float PULLEY_RATIO    = 100.0f / 20.0f; // polea 20T (motor) -> 100T (
 constexpr float COUNTS_PER_JOINT_REV = MOTOR_ENC_CPR * GEARBOX_RATIO * PULLEY_RATIO; // 16000
 constexpr float DEG_PER_COUNT   = 360.0f / COUNTS_PER_JOINT_REV;                     // 0.0225 deg
 
-constexpr float JOINT_LIMIT_DEG = 90.0f;          // limite de J1 y J2 (+/-)
+// Convencion de angulos: 0 deg = brazo estirado y alineado (centro del recorrido),
+// DERECHA = POSITIVO. Medido a mano con ENC_SIGN = +1: NO cambiar ENC_SIGN.
+// Si la prueba 'o' dice "signo invertido", cambia MOTOR_SIGN (sentido del motor).
+constexpr int ENC_SIGN_J1   = +1, ENC_SIGN_J2   = +1;
+constexpr int MOTOR_SIGN_J1 = +1, MOTOR_SIGN_J2 = +1;
 
-// Poner -1 si con duty positivo los grados salen negativos (prueba 'o' en main.cpp).
-constexpr int ENC_SIGN_J1 = +1;
-constexpr int ENC_SIGN_J2 = +1;
+// Posicion del switch DERECHO medida desde el centro (medida a mano: afinar con el homing real).
+// El izquierdo queda simetrico (-valor).
+constexpr float J1_SWITCH_R_DEG = 95.6f;   // recorrido total medido: 191.2 deg
+constexpr float J2_SWITCH_R_DEG = 72.2f;   // recorrido total medido: 144.3 deg
+// Limite de software: unos 5-7 deg antes de cada switch.
+constexpr float J1_LIMIT_DEG = 88.0f;
+constexpr float J2_LIMIT_DEG = 67.0f;
+
+// Homing: va al switch derecho a duty bajo, fija la posicion y se retira BACKOFF_DEG.
+constexpr float    HOME_DUTY         = 0.20f;
+constexpr float    HOME_BACKOFF_DEG  = 8.0f;
+constexpr uint32_t HOME_TIMEOUT_MS   = 30000;
+constexpr int      HOME_STALL_COUNTS = 8;      // minimo de cuentas cada 400 ms; si no, aborta
 
 // =====================================================================
 //  PINES (mapeados a mano sobre la placa)

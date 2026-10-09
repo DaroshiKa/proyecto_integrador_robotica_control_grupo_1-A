@@ -1,4 +1,4 @@
-# Mapa de pines — SCARA (ESP32 WROOM-32 + 2 × MC33926)
+# Mapa de pines y recorrido — SCARA (ESP32 WROOM-32 + 2 × MC33926)
 
 Mapeado a mano sobre la placa (no hay esquemático).
 
@@ -30,6 +30,16 @@ FB (corriente) y SF (falla) no están conectados.
 | J1 | D27 | D13 |
 | J2 | D19 | D18 |
 
+## Recorrido (medido a mano entre switches)
+Convención: 0° = brazo estirado y alineado con un eje (centro del recorrido); derecha = positivo.
+
+| Articulación | Recorrido total | Switch derecho | Límite de software |
+|---|---|---|---|
+| J1 | 191.2° | +95.6° | ±88° |
+| J2 | 144.3° | +72.2° | ±67° |
+
+La posición de los switches se midió presionándolos a mano; conviene afinarla con el homing real.
+
 ## Pendiente
-- Z (solenoide): sin pin asignado.
-- Los canales A/B de cada encoder se asumieron por color; si el signo sale al revés, se corrige con `ENC_SIGN_Jx` en `config.h`.
+- Z (articulación prismática, solenoide): no disponible todavía, sin pin asignado.
+- Verificar con el homing real la posición de los switches y que el izquierdo quede simétrico.
